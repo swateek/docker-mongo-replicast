@@ -15,14 +15,14 @@ A simple docker setup of MongoDB replicaset.
 **Step 2**: Test the functioning
 
     docker exec -ti mongo1 bash
-    mongo --port 30001
+    mongo
     use ricky;
     db.swateek.insert({'hey':'there!'});
     exit
     exit
 
     docker exec -ti mongo2 bash
-    mongo --port 30002
+    mongo
     rs.secondaryOk()
     show dbs;
     use ricky;
@@ -32,7 +32,7 @@ A simple docker setup of MongoDB replicaset.
     exit
 
     docker exec -ti mongo3 bash
-    mongo --port 30003
+    mongo
     rs.secondaryOk()
     show dbs;
     use ricky;

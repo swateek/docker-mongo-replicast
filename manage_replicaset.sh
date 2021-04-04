@@ -24,7 +24,7 @@ start()
 
 clean()
 {
-    echo "Cleaning Postgres data directory"
+    echo "Cleaning MongoDB Replicaset data directory"
     rm -rf data
     docker volume rm mongo_replicaset_mongo_cdb_1 mongo_replicaset_mongo_cdb_2 mongo_replicaset_mongo_cdb_3
     docker volume rm mongo_replicaset_mongo_ds_1 mongo_replicaset_mongo_ds_2 mongo_replicaset_mongo_ds_3
