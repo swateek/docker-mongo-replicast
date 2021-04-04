@@ -49,3 +49,7 @@ A simple docker setup of MongoDB replicaset.
 **Step 4**: Run a clean system
 
     ./manage_replicaset.sh --clean
+
+**or to just have a clean stop**
+
+    ./manage_replicaset.sh --cleanstop

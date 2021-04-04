@@ -39,6 +39,7 @@ then
 elif [ "$1" == "--cleanstop" ]
 then
     stop
+    clean
 elif [ "$1" == "--clean" ]
 then
     stop
