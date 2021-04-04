@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+  mongo1:
+    image: mongo:latest
+    container_name: mongo1
+    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "30001"]
+    volumes:
+      - ${PWD}/data/mongo-ds-1:/data/db
+      - ${PWD}/data/mongo-cdb-1:/data/configdb
+    ports:
+      - 30001:30001
+    networks: 
+      - mongodb_rs
+    healthcheck:
+      test: test $$(echo "rs.initiate({_id:'my-replica-set',members:[{_id:0,host:\"mongo1:30001\"},{_id:1,host:\"mongo2:30002\"},{_id:2,host:\"mongo3:30003\"}]}).ok || rs.status().ok" | mongo --port 30001 --quiet) -eq 1
+      interval: 10s
+      start_period: 30s
+
+  mongo2:
+    image: mongo:latest
+    container_name: mongo2
+    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "30002"]
+    volumes:
+      - ${PWD}/data/mongo-ds-2:/data/db
+      - ${PWD}/data/mongo-cdb-2:/data/configdb
+    ports:
+      - 30002:30002
+    networks: 
+      - mongodb_rs
+
+  mongo3:
+    image: mongo:latest
+    container_name: mongo3
+    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "30003"]
+    volumes:
+      - ${PWD}/data/mongo-ds-3:/data/db
+      - ${PWD}/data/mongo-cdb-3:/data/configdb
+    ports:
+      - 30003:30003
+    networks: 
+      - mongodb_rs
+
+networks: 
+  mongodb_rs:
+    name: mongodb_rs
+    driver: bridge
+
+volumes: 
+  mongo_ds_1:
+    driver: local
+  mongo_ds_2:
+    driver: local
+  mongo_ds_3:
+    driver: local
+  mongo_cdb_1:
+    driver: local
+  mongo_cdb_2:
+    driver: local
+  mongo_cdb_3:
+    driver: local
